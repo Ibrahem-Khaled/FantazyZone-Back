@@ -24,4 +24,9 @@ class League extends Model
     {
         return $this->belongsToMany(User::class, 'user_leagues', 'user_id', 'league_id');
     }
+
+    public function page()
+    {
+        return $this->belongsTo(Page::class, 'page_id');
+    }
 }
