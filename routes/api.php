@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\LeaguesController;
 use App\Http\Controllers\api\MachController;
+use App\Http\Controllers\api\PageController;
 use App\Http\Controllers\api\PostsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,7 +46,7 @@ Route::post("add/user/teams/{id}/{user}", [TeamController::class, "addUserinTeam
 
 
 
-Route::get("get/league", [LeaguesController::class, "index"]);
+Route::get("get/league/{pageid}", [LeaguesController::class, "index"]);
 Route::get("get/league/team/{id}", [LeaguesController::class, "leagueTeam"]);
 Route::post("post/league", [LeaguesController::class, "store"]);
 Route::post("update/league/{id}", [LeaguesController::class, "update"]);
@@ -56,3 +57,7 @@ Route::get("user/league/{id}", [LeaguesController::class, "getUserLeague"]);
 Route::get("match/random/{id}", [MachController::class, 'handle']);
 Route::get("match/random/go/only/{id}", [MachController::class, 'goOnly']);
 Route::get("team/match", [MachController::class, 'teamsMatch']);
+
+
+Route::post('page/post', [PageController::class, 'create']);
+Route::get('page/get', [PageController::class, 'index']);

@@ -4,14 +4,16 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\League;
+use App\Models\Page;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class LeaguesController extends Controller
 {
-    public function index()
+    public function index($pageid)
     {
-        $league = League::all();
+        $league = Page::find($pageid);
+        $league->league;
         return response()->json($league, 200);
     }
     public function leagueTeam($id)
