@@ -53,5 +53,6 @@ Route::post("delete/league/{id}", [LeaguesController::class, "delete"]);
 Route::get("user/league/{id}", [LeaguesController::class, "getUserLeague"]);
 
 
-Route::get("match/random", [MachController::class, 'handle']);
+Route::get("match/random/{id}", [MachController::class, 'handle']);
+Route::get("match/random/go/only/{id}", [MachController::class, 'goOnly']);
 Route::get("team/match", [MachController::class, 'teamsMatch']);

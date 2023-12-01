@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -21,6 +20,7 @@ return new class extends Migration
             $table->boolean('team_leader')->default(0);
             $table->boolean('leagues_leader')->default(0);
             $table->boolean('captin')->default(0);
+            $table->boolean('deka')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -10,15 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('leagues', function (Blueprint $table) {
+        Schema::create('user_leagues', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->bigInteger('league_id');
             $table->bigInteger('user_id');
-            $table->boolean('is_capten')->default(0);
-            $table->boolean('is_spare')->default(0);
-            $table->enum('status', ['league', 'kass'])->default('league');
-            $table->string('max_team_number')->default(12);
-            $table->string('max_player_number')->default(6);
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('leagues');
+        Schema::dropIfExists('user_leagues');
     }
 };
