@@ -29,4 +29,8 @@ class League extends Model
     {
         return $this->belongsTo(Page::class, 'page_id');
     }
+    public function match()
+    {
+        return $this->hasMany(Matchteam::class, 'league_id', 'id');
+    }
 }

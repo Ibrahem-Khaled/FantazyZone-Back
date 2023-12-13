@@ -9,4 +9,9 @@ class Matchteam extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function league()
+    {
+        return $this->belongsTo(League::class, 'league_id', 'id');
+    }
 }

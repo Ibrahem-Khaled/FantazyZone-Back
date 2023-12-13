@@ -61,7 +61,7 @@ class MachController extends Controller
         $teams = Matchteam::get();
         foreach ($teams as $team) {
             $Team_A = Team::find($team->team1_id)->get();
-            $Team_B = Team::find($team->team1_id)->get();
+            $Team_B = Team::find($team->team2_id)->get();
         }
         return response()->json([
             'Team_A' => $Team_A,

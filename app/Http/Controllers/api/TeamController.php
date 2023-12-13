@@ -26,7 +26,7 @@ class TeamController extends Controller
         $count = $league->team->count();
         $teamNumber = $league->max_team_number;
 
-        if ($count <= (int)$teamNumber) {
+        if ($count !== (int)$teamNumber) {
             $team =  Team::create([
                 'name' => $request->name,
             ]);
