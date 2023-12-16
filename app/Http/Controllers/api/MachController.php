@@ -23,6 +23,7 @@ class MachController extends Controller
                 DB::table('matchteams')->insert([
                     'team1_id' => $teams[$i],
                     'team2_id' => $teams[$j],
+                    'league_id' => $id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -30,6 +31,7 @@ class MachController extends Controller
                 DB::table('matchteams')->insert([
                     'team1_id' => $teams[$j],
                     'team2_id' => $teams[$i],
+                    'league_id' => $id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
