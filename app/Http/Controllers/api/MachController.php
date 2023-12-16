@@ -60,16 +60,18 @@ class MachController extends Controller
         return response()->json('succc');
     }
 
-    public function teamsMatch()
+    public function teamsMatch($id)
     {
-        $teams = Matchteam::get();
+        $teams = League::find($id)->match;
+        $result = [];
         foreach ($teams as $team) {
             $Team_A = Team::find($team->team1_id);
             $Team_B = Team::find($team->team2_id);
+            $result[] = [
+                'team1' => $Team_A,
+                'team2' => $Team_B,
+            ];
         }
-        return response()->json([
-            'Team_A' => $Team_A,
-            'Team_B' => $Team_B,
-        ]);
+        return response()->json($result);
     }
 }
