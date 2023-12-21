@@ -23,6 +23,7 @@ class MachController extends Controller
                 DB::table('matchteams')->insert([
                     'team1_id' => $teams[$i],
                     'team2_id' => $teams[$j],
+                    'league_id' => $id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -30,6 +31,7 @@ class MachController extends Controller
                 DB::table('matchteams')->insert([
                     'team1_id' => $teams[$j],
                     'team2_id' => $teams[$i],
+                    'league_id' => $id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -49,6 +51,7 @@ class MachController extends Controller
                 DB::table('matchteams')->insert([
                     'team1_id' => $teams[$i],
                     'team2_id' => $teams[$j],
+                    'league_id' => $id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -56,16 +59,19 @@ class MachController extends Controller
         }
         return response()->json('succc');
     }
-    public function teamsMatch()
+
+    public function teamsMatch($id)
     {
-        $teams = Matchteam::get();
+        $teams = League::find($id)->match;
+        $result = [];
         foreach ($teams as $team) {
-            $Team_A = Team::find($team->team1_id)->get();
-            $Team_B = Team::find($team->team2_id)->get();
+            $Team_A = Team::find($team->team1_id);
+            $Team_B = Team::find($team->team2_id);
+            $result[] = [
+                'team1' => $Team_A,
+                'team2' => $Team_B,
+            ];
         }
-        return response()->json([
-            'Team_A' => $Team_A,
-            'Team_B' => $Team_B,
-        ]);
+        return response()->json($result);
     }
 }
