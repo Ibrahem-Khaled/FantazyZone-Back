@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use App\Models\User;
 use GuzzleHttp\Client;
@@ -27,7 +28,7 @@ class UserController extends Controller
         }
         return response()->json('Done!');
     }
-  
+
     public function user($id)
     {
         $users = User::find($id);
@@ -37,7 +38,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $user =  User::create($input);
+        $user = User::create($input);
         return response()->json([
             'data' => $user
         ]);
@@ -63,5 +64,28 @@ class UserController extends Controller
     {
         $user = User::where('fn_id', $fnid)->get();
         return response()->json($user);
+    }
+
+    public function isCaptine(Request $request, $teamId, $userId)
+    {
+        $team = Team::findOrFail($teamId);
+        $team->users()->update([
+            'captin' => 0,
+        ]);
+        $user = User::find($userId);
+        $user->update([
+            'captin' => 1,
+        ]);
+    }
+    public function isDeka(Request $request, $teamId, $userId)
+    {
+        $team = Team::findOrFail($teamId);
+        $team->users()->update([
+            'deka' => 0,
+        ]);
+        $user = User::find($userId);
+        $user->update([
+            'deka' => 1,
+        ]);
     }
 }
