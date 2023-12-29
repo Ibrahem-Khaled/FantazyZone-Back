@@ -68,24 +68,33 @@ class UserController extends Controller
 
     public function isCaptine(Request $request, $teamId, $userId)
     {
-        $team = Team::findOrFail($teamId);
-        $team->users()->update([
-            'captin' => 0,
-        ]);
         $user = User::find($userId);
-        $user->update([
-            'captin' => 1,
-        ]);
+        if ($user->deka == 0) {
+            $team = Team::findOrFail($teamId);
+            $team->users()->update([
+                'captin' => 0,
+            ]);
+            $user->update([
+                'captin' => 1,
+                'points' => $user->points * 2,
+            ]);
+            return response()->json('done');
+        }
+        return response()->json('لا يمكن جعل دكة كابتن');
     }
     public function isDeka(Request $request, $teamId, $userId)
     {
-        $team = Team::findOrFail($teamId);
-        $team->users()->update([
-            'deka' => 0,
-        ]);
         $user = User::find($userId);
-        $user->update([
-            'deka' => 1,
-        ]);
+        if ($user->captin == 0) {
+            $team = Team::findOrFail($teamId);
+            $team->users()->update([
+                'deka' => 0,
+            ]);
+            $user->update([
+                'deka' => 1 ,
+            ]);
+            return response()->json('done');
+        }
+        return response()->json('لا يمكن جعل الكابتن دكة');
     }
 }

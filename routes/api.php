@@ -29,7 +29,7 @@ Route::post("post/user", [UserController::class, "store"]);
 Route::post("update/user/{id}", [UserController::class, "update"]);
 Route::post("delete/user/{id}", [UserController::class, "delete"]);
 Route::get("user/captin/{teamId}/{userId}", [UserController::class, "isCaptine"]);
-Route::get("user/captin/{teamId}/{userId}", [UserController::class, "isDeka"]);
+Route::get("user/deka/{teamId}/{userId}", [UserController::class, "isDeka"]);
 
 Route::get("get/posts", [PostsController::class, "index"]);
 Route::post("post/posts", [PostsController::class, "store"]);
