@@ -46,7 +46,7 @@ class User extends Authenticatable
     }
     public function teams()
     {
-        return $this->belongsToMany(Team::class, "team_users", "user_id", "team_id");
+        return $this->belongsToMany(Team::class, "team_users", "team_id", "user_id");
     }
 
     public function league()
