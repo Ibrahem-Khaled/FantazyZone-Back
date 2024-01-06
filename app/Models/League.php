@@ -15,14 +15,13 @@ class League extends Model
     {
         return $this->belongsToMany(Team::class, "league_teams", "league_id", "team_id");
     }
+    public function teamAdmin()
+    {
+        return $this->belongsToMany(User::class, 'user_leagues', 'league_id', 'user_id');
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function userleague()
-    {
-        return $this->belongsToMany(User::class, 'user_leagues', 'user_id', 'league_id');
     }
 
     public function page()

@@ -20,7 +20,11 @@ class LeaguesController extends Controller
     {
         $league = League::find($id);
         $league->team;
-        return response()->json($league, 200);
+        $teamsAdmins = $league->teamAdmin;
+        return response()->json([
+            'league' => $league,
+            'adminsTeam' => $teamsAdmins,
+        ]);
     }
     public function store(Request $request)
     {

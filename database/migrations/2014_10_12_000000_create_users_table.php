@@ -15,9 +15,7 @@ return new class extends Migration {
             $table->bigInteger('fn_id')->unique();
             $table->string('name')->nullable();
             $table->bigInteger('points')->nullable();
-            $table->bigInteger('team_id')->nullable();
             $table->boolean('is_admin')->default(0);
-            $table->boolean('team_leader')->default(0);
             $table->boolean('leagues_leader')->default(0);
             $table->boolean('captin')->default(0);
             $table->boolean('deka')->default(0);

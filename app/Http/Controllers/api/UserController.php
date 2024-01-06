@@ -60,6 +60,11 @@ class UserController extends Controller
         return response()->json('delete successfully');
     }
 
+    public function createUserLeague($leagueId, $userId)
+    {
+
+    }
+
     public function whereUser($fnid)
     {
         $user = User::where('fn_id', $fnid)->get();
@@ -91,7 +96,7 @@ class UserController extends Controller
                 'deka' => 0,
             ]);
             $user->update([
-                'deka' => 1 ,
+                'deka' => 1,
             ]);
             return response()->json('done');
         }

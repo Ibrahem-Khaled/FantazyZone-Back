@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\TeamController;
+use App\Http\Controllers\api\SetUserRule;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,3 +63,6 @@ Route::get("team/match/{id}", [MachController::class, 'teamsMatch']);
 
 Route::post('page/post', [PageController::class, 'create']);
 Route::get('page/get', [PageController::class, 'index']);
+
+
+Route::post('setRule/team', [SetUserRule::class, 'setUserLeagueTeamLeader']);
