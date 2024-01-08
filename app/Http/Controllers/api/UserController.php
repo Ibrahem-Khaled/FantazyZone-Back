@@ -25,6 +25,9 @@ class UserController extends Controller
                 'name' => $data->player_first_name,
                 'points' => $user->captin == 1 ? $data->summary_event_points * 2 : $data->summary_event_points,
             ]);
+            $user->update([
+                'points' => $user->deka == 1 ? $data->summary_event_points * 0 : $data->summary_event_points,
+            ]);
         }
         return response()->json('Done!');
     }

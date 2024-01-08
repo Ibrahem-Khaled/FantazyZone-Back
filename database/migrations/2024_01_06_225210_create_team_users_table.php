@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('team_id');
+            $table->unique(['team_id', 'user_id']); // Ensures uniqueness for a user within a team
             $table->timestamps();
         });
     }
