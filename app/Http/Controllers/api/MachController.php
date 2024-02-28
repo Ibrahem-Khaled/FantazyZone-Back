@@ -19,7 +19,7 @@ class MachController extends Controller
 
         if ($league->status == 'kass') {
             $league = League::find($id);
-            $teams = $league->team()->pluck('id')->toArray();
+            $teams = $league->team()->pluck('teams.id')->toArray();
             $teamCount = count($teams);
 
             while ($teamCount > 1) {
