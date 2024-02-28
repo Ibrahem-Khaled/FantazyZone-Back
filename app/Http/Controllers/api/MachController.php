@@ -47,6 +47,7 @@ class MachController extends Controller
 
             $rounds = [];
             $numTeams = count($teams);
+            $currentRound = 1;
 
             // Generate rounds of matches
             for ($round = 1; $round < $numTeams; $round++) {
@@ -56,22 +57,28 @@ class MachController extends Controller
                         'team1_id' => $teams[$i],
                         'team2_id' => $teams[$numTeams - 1 - $i],
                         'league_id' => $id,
+                        'round_number' => $currentRound, // Add round number
                         'created_at' => now(),
                         'updated_at' => now(),
                     ];
                 }
-                $rounds[] = $matches;
+                $rounds[$currentRound] = $matches;
+                $currentRound++;
+
                 // Rotate the team IDs for the next round
                 $lastTeam = array_pop($teams);
                 array_splice($teams, 1, 0, $lastTeam);
             }
+
             // Insert matches into the database for each round
-            foreach ($rounds as $roundMatches) {
+            foreach ($rounds as $roundNumber => $roundMatches) {
                 foreach ($roundMatches as $match) {
                     DB::table('matchteams')->insert($match);
                 }
             }
+
             return response()->json('Success! Random matches divided into rounds created.');
+
         } else {
             return response()->json('success match league created');
         }

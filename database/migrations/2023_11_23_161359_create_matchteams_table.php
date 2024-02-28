@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->foreign('team1_id')->references('id')->on('teams');
             $table->foreign('team2_id')->references('id')->on('teams');
             $table->bigInteger('league_id')->references('id')->on('leagues');
+            $table->bigInteger('round_number')->nullable();
             $table->timestamps();
         });
     }
