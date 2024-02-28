@@ -42,7 +42,7 @@ class MachController extends Controller
             }
             return response()->json('success match kass created');
         } else if ($league->status == 'league') {
-            $teams = $league->team()->pluck('id')->toArray();
+            $teams = $league->team()->pluck('teams.id')->toArray();
             shuffle($teams); // Shuffle the team IDs randomly
 
             $rounds = [];
