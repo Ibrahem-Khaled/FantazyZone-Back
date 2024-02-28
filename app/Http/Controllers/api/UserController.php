@@ -15,7 +15,6 @@ class UserController extends Controller
     {
         $users = User::get();
         $client = new Client();
-
         foreach ($users as $user) {
             $response = $client->get("https://fantasy.premierleague.com/api/entry/$user->fn_id");
             $data = json_decode($response->getBody());
@@ -23,10 +22,7 @@ class UserController extends Controller
             $user = User::find($user->id);
             $user->update([
                 'name' => $data->player_first_name,
-                'points' => $user->captin == 1 ? $data->summary_event_points * 2 : $data->summary_event_points,
-            ]);
-            $user->update([
-                'points' => $user->deka == 1 ? $data->summary_event_points * 0 : $data->summary_event_points,
+                'points' => $data->summary_event_points,
             ]);
         }
         return response()->json('Done!');
@@ -61,11 +57,6 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete($input);
         return response()->json('delete successfully');
-    }
-
-    public function createUserLeague($leagueId, $userId)
-    {
-
     }
 
     public function whereUser($fnid)

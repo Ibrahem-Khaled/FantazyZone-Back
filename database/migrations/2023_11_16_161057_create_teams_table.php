@@ -14,10 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->bigInteger('user_id');
-            $table->bigInteger('captin_id');
-            $table->bigInteger('deka_id');
+            $table->bigInteger('captin_id')->nullable();
+            $table->bigInteger('deka_id')->nullable();
             $table->bigInteger('points')->default(0);
             $table->bigInteger('current_points')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

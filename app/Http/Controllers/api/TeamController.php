@@ -69,12 +69,20 @@ class TeamController extends Controller
         $user = User::where('fn_id', $id)->get();
         return response()->json($user);
     }
-    public function addUserinTeam($id, $user)
+    public function addUserinTeam(Request $request, $id, $user)
     {
-        TeamUser::create([
-            'team_id' => $id,
-            'user_id' => $user,
-        ]);
-        return response('done!');
+        $league = League::find($request->leagueId);
+        $team = Team::find($id)->users;
+        $countTeam = $team->count();
+
+        if ((int) $league->max_player_number < $countTeam) {
+            TeamUser::create([
+                'team_id' => $id,
+                'user_id' => $user,
+            ]);
+            return response('done!');
+        } else {
+            return response('لا يمكن ادخال اكثر من ذلك في الفرق');
+        }
     }
 }
