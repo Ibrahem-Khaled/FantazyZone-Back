@@ -14,8 +14,7 @@ class MachController extends Controller
     public function handle($id)
     {
         $league = League::find($id);
-        $teams = $league->team->pluck('id');
-        $teamCount = count($teams);
+
 
         if ($league->status == 'kass') {
             $league = League::find($id);
@@ -43,25 +42,36 @@ class MachController extends Controller
             }
             return response()->json('success match kass created');
         } else if ($league->status == 'league') {
-            for ($i = 0; $i < $teamCount - 1; $i++) {
-                for ($j = $i + 1; $j < $teamCount; $j++) {
-                    DB::table('matchteams')->insert([
+            $teams = $league->team()->pluck('id')->toArray();
+            shuffle($teams); // Shuffle the team IDs randomly
+
+            $rounds = [];
+            $numTeams = count($teams);
+
+            // Generate rounds of matches
+            for ($round = 1; $round < $numTeams; $round++) {
+                $matches = [];
+                for ($i = 0; $i < $numTeams / 2; $i++) {
+                    $matches[] = [
                         'team1_id' => $teams[$i],
-                        'team2_id' => $teams[$j],
+                        'team2_id' => $teams[$numTeams - 1 - $i],
                         'league_id' => $id,
                         'created_at' => now(),
                         'updated_at' => now(),
-                    ]);
-                    DB::table('matchteams')->insert([
-                        'team1_id' => $teams[$j],
-                        'team2_id' => $teams[$i],
-                        'league_id' => $id,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
+                    ];
+                }
+                $rounds[] = $matches;
+                // Rotate the team IDs for the next round
+                $lastTeam = array_pop($teams);
+                array_splice($teams, 1, 0, $lastTeam);
+            }
+            // Insert matches into the database for each round
+            foreach ($rounds as $roundMatches) {
+                foreach ($roundMatches as $match) {
+                    DB::table('matchteams')->insert($match);
                 }
             }
-            return response()->json('success match round-trip created');
+            return response()->json('Success! Random matches divided into rounds created.');
         } else {
             return response()->json('success match league created');
         }
