@@ -72,17 +72,20 @@ class TeamController extends Controller
     public function addUserinTeam(Request $request, $id, $user)
     {
         $league = League::find($request->leagueId);
-        $team = Team::find($id)->users;
-        $countTeam = $team->count();
+        $team = Team::find($id);
+        if (!$team) {
+            return response('Team not found', 404);
+        }
+        $countTeam = $team->users()->count();
 
-        if ((int) $league->max_player_number < $countTeam) {
+        if ((int) $league->max_player_number > $countTeam) {
             TeamUser::create([
                 'team_id' => $id,
                 'user_id' => $user,
             ]);
-            return response('done!');
+            return response('User added to the team successfully!');
         } else {
-            return response('لا يمكن ادخال اكثر من ذلك في الفرق');
+            return response('Cannot add more users to the team. Team is full.', 400);
         }
     }
 }
