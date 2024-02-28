@@ -19,25 +19,15 @@ class MachController extends Controller
 
         if ($league->status == 'kass') {
             $league = League::find($id);
-            $teams = $league->teams()->pluck('id')->toArray();
+            $teams = $league->team()->pluck('id')->toArray();
             $teamCount = count($teams);
 
-            // Generate matches until only one team remains active
             while ($teamCount > 1) {
-                // Randomly select two teams from active teams
                 $team1Key = array_rand($teams);
                 $team1 = $teams[$team1Key];
-
-                // Remove team1 from the list of available teams
                 unset($teams[$team1Key]);
-
-                // Shuffle the array to randomize the selection of team2
                 shuffle($teams);
-
-                // Select the first team from the shuffled array as team2
                 $team2 = reset($teams);
-
-                // Insert match into the database
                 DB::table('matchteams')->insert([
                     'team1_id' => $team1,
                     'team2_id' => $team2,
@@ -45,11 +35,7 @@ class MachController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-
-                // Decrement the team count
                 $teamCount--;
-
-                // If there are still teams left, remove team2 from the list of available teams
                 if ($teamCount > 1) {
                     unset($teams[array_search($team2, $teams)]);
                     $teamCount--;
