@@ -94,11 +94,9 @@ class MachController extends Controller
             $result[] = [
                 'team1' => $Team_A,
                 'team2' => $Team_B,
+                'round' => $team->round_number
             ];
         }
-        return response()->json([
-            'match' => $teams,
-            'data' => $result,
-        ]);
+        return response()->json($result);
     }
 }
