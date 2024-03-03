@@ -76,6 +76,15 @@ class TeamController extends Controller
         if (!$team) {
             return response('Team not found', 404);
         }
+        // Check if the user is already associated with any team in the league
+        $userInLeague = TeamUser::where('user_id', $user)
+            ->whereIn('team_id', $league->team()->pluck('id')->toArray())
+            ->exists();
+
+        if ($userInLeague) {
+            return response('User is already associated with a team in the league.', 400);
+        }
+
         $countTeam = $team->users()->count();
 
         if ((int) $league->max_player_number > $countTeam) {
